@@ -2,7 +2,10 @@
 import './Products.css'
 import { AddToCartIcon } from './Icons.jsx';
 
+
+
 export function Products({ products }) {
+
     return (
         <div className="products">
             <ul>
@@ -17,6 +20,7 @@ export function Products({ products }) {
                         </div>
                         <div>
                             <button>
+
                                 <AddToCartIcon />
                             </button>
                         </div>
