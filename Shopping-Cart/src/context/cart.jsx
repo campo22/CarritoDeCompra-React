@@ -2,25 +2,28 @@ import { createContext, useState } from 'react';
 
 export const CartContext = createContext();
 
-export function CartProvider({ childre }) {
-    const [cart, setCart] = useState([]);
+export function CartProvider({ children }) {
+    const [cart, setCart,] = useState([]);
 
     // agregar producto al carrito
-    const addToCart = products => {
-        const productInCartIdex =
-            cart.findIndex(item => item.id === products.id);
+    const addToCart = product => {
+        const productInCartIndex = cart.findIndex(item => item.id === product.id);
         // si el producto ya existe en el carrito
-        if (productInCartIdex >= 0) {
+        if (productInCartIndex >= 0) {
             const newCart = structuredClone(cart);
-            newCart[productInCartIdex].quantity += 1;
+            newCart[productInCartIndex].quantity += 1;
             return setCart(newCart);
 
             // si el producto no existe en el carrito
         } else {
             setCart(prevState => [...prevState,
-            { ...products, quantity: 1 }]);
+            { ...product, quantity: 1 }]);
 
         }
+    }
+
+    const removeFromCart = (product) => {
+        setCart(prevstate => prevstate.filter(item => item.id !== product.id))
     }
 
     // eliminar producto del carrito
@@ -31,9 +34,10 @@ export function CartProvider({ childre }) {
         <CartContext.Provider value={{
             cart,
             addToCart,
-            clearCart
+            clearCart,
+            removeFromCart
         }}>
-            {childre}
+            {children}
 
         </CartContext.Provider>
     )

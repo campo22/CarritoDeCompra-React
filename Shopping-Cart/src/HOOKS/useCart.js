@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { CartContext } from "../context/cart";
 
-export const Cart = () => {
+export const useCart = () => {
   const contex = useContext(CartContext);
 
   if (contex === undefined) {
