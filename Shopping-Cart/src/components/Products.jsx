@@ -6,6 +6,7 @@ import { useCart } from '../HOOKS/useCart';
 export function Products({ products }) {
     const { addToCart, cart, removeFromCart } = useCart();
 
+    // Verificar si el producto ya está en el carrito
     const checkProductInCart = (product) => {
         return cart.some((item) => item.id === product.id);
     };
@@ -28,7 +29,7 @@ export function Products({ products }) {
                                     onClick={() => {
                                         isProductInCart ?
                                             removeFromCart(product) :
-                                            addToCart(product)
+                                            addToCart({ ...product, quantity: 1 }) // Agregar producto con cantidad inicial de 1
                                     }}
                                 >
                                     {

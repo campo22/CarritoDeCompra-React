@@ -7,21 +7,41 @@ export const CartContext = createContext();
 function useCartReduce() {
     const [state, dispatch] = useReducer(cartReducer, cartInicialState);
 
+    // Action para agregar un producto al carrito
     const addToCart = (product) => dispatch({
         type: 'ADD_TO_CART',
         payload: product
     })
+    // Action para remover un producto del carrito
     const removeFromCart = (product) => dispatch({
         type: 'REMOVE_FROM_CART',
         payload: product
     })
+    // Action para limpiar el carrito
     const clearCart = () => dispatch({ type: 'CLEAR_CART' })
 
-    return { state, addToCart, removeFromCart, clearCart }
+    // accaion para incrementar la cantidad de un producto en el carrito
+    const incrementQuantity = (product) => dispatch({
+        type: 'INCREMENT_QUANTITY',
+        payload: product
+    })
+    // accaion para decrementar la cantidad de un producto en el carrito
+    const decrementQuantity = (product) => dispatch({
+        type: 'DECREMENT_QUANTITY',
+        payload: product
+    })
+
+    return { state, addToCart, removeFromCart, clearCart, incrementQuantity, decrementQuantity }
 }
 
 export function CartProvider({ children }) {
-    const { state, addToCart, removeFromCart, clearCart } = useCartReduce();
+    const {
+        state,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        incrementQuantity,
+        decrementQuantity } = useCartReduce();
 
 
     return (
@@ -29,7 +49,9 @@ export function CartProvider({ children }) {
             cart: state,
             addToCart,
             clearCart,
-            removeFromCart
+            removeFromCart,
+            incrementQuantity,
+            decrementQuantity
         }}>
             {children}
 
